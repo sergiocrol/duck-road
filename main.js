@@ -24,6 +24,7 @@ function main() {
   }
 
   function createGameScreen() {
+    localStorage.setItem('score', JSON.stringify({score: 0}));
     var gameScreen = `
     <section>
       <canvas width="850px" height="700px"></canvas>
@@ -58,8 +59,12 @@ function main() {
   }
 
   function createGameOverScreen() {
+    var score = JSON.parse(localStorage.getItem('score')).score;
+    var bestScore = JSON.parse(localStorage.getItem('bestScore')).bestScore;
     var gameOverScreen = `
      <section>
+      <p>Your score: ${score}</p>
+      <p>Best score: ${bestScore}</p>
       <button>Restart</button>
      </section>
     `

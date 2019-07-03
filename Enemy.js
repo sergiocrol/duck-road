@@ -1,6 +1,6 @@
 'use strict'
 
-function Enemy(canvas, x, y, direction, width, height, speed) {
+function Enemy(canvas, x, y, direction, width, height, speed, image) {
   this.canvas = canvas;
   this.ctx = this.canvas.getContext('2d');
   this.x = x;
@@ -9,11 +9,15 @@ function Enemy(canvas, x, y, direction, width, height, speed) {
   this.speed = speed;
   this.width = width;
   this.height = height;
+  this.image = image;
 }
 
 Enemy.prototype.draw = function() {
-  this.ctx.fillStyle = 'yellow';
-  this.ctx.fillRect(this.x, this.y, this.width, this.height);
+  /*this.ctx.fillStyle = 'yellow';
+  this.ctx.fillRect(this.x, this.y, this.width, this.height);*/
+  var img = new Image();
+  img.src = this.image;
+  this.ctx.drawImage(img, this.x, this.y, this.width, this.height);
 }
 
 Enemy.prototype.move = function() {

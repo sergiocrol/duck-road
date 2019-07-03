@@ -93,7 +93,11 @@ Game.prototype.updateEnemies = function() {
 Game.prototype.checkCollisions = function() {
   this.lines.forEach((line, index) => {
     var i = index;
-    line.draw();
+    if(line.constructor === DangerLine){
+      line.draw('danger');
+    }else{
+      line.draw();
+    }
     if(line.constructor === DangerLine){
       line.enemies.forEach((enemy) => {
         //enemy.checkCollisionWithPlayer(this.player);
@@ -121,12 +125,27 @@ Game.prototype.checkCollisions = function() {
         }else{
           this.score += 10;
           section.querySelector('#score').innerHTML = 'Score: ' + this.score;
+          this.assignScore();
         }
         line.objects.splice(0,1);
       }
     })
   })
 };
+
+Game.prototype.assignScore = function() {
+  localStorage.setItem('score', JSON.stringify({score: this.score}));
+  console.log(JSON.parse(localStorage.getItem('score')).score);
+  if(JSON.parse(localStorage.getItem('bestScore')) === null) {  
+    localStorage.setItem('bestScore', JSON.stringify({bestScore: this.score}));
+  }else{
+    var bestScore = JSON.parse(localStorage.getItem('bestScore')).bestScore;
+    if(bestScore <= this.score) {
+      bestScore = this.score;
+    }
+    localStorage.setItem('bestScore', JSON.stringify({bestScore: bestScore}));
+  }
+}
 
 Game.prototype.checkLives = function() {
   if(this.player.lives <= 0) {
@@ -165,7 +184,11 @@ Game.prototype.generateObjects = function() {
 
 Game.prototype.draw = function() {
   this.lines.forEach(function(line) {
-    line.draw();
+    if(line.constructor === DangerLine){
+      line.draw('danger');
+    }else{
+      line.draw();
+    }
     line.objects.forEach(function(lineObject) {
       lineObject[0].draw();
     })
