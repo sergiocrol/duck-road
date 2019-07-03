@@ -13,7 +13,7 @@ function Game(canvas) {
 };
 
 Game.prototype.startGame = function() {
-  var lineArray = ['Line','DangerLine','Line','DangerLine','DangerLine','Line','DangerLine','WaterLine','DangerLine','Line','WaterLine','DangerLine','DangerLine','Line','WaterLine','WaterLine'];
+  var lineArray = ['Line','DangerLine','Line','DangerLine','DangerLine','Line','DangerLine','DangerLine','DangerLine','Line','DangerLine','DangerLine','DangerLine','Line','DangerLine','DangerLine'];
   lineArray = lineArray.reverse();
   for(var i = 0; i<lineArray.length; i++) {
     var file;
@@ -22,7 +22,7 @@ Game.prototype.startGame = function() {
     }else if(lineArray[i] === 'DangerLine'){
       file = new DangerLine(this.canvas, i-2, 'grey', 50, Math.random() < 0.5 ? -1 : 1, this.level);
     }else{
-      file = new WaterLine(this.canvas, i-2, 'blue', 50, this.level);
+      file = new WaterLine(this.canvas, i-2, 'blue', 50, Math.random() < 0.5 ? -1 : 1, this.level);
     }
     this.lines.push(file);
   }
@@ -55,14 +55,7 @@ Game.prototype.clear = function() {
 };
 
 Game.prototype.update = function() {
-  //this.updateLines();
-  /*this.lines.forEach((line) => {
-    line.move();
-  })
-  this.player.move('line');*/
-  /*if(this.player.y <= this.lines[8].y+this.lines[8].height/2) {
-    this.player.direction = '';
-  }*/
+
   this.player.move('user');
   this.lines.forEach(function(line) {
     if(line.constructor === DangerLine){
@@ -122,12 +115,14 @@ Game.prototype.checkCollisions = function() {
           this.player.lives++;
           section.querySelector('#lives').innerHTML = 'Lives: ' + this.player.lives;
           console.log(this.player.lives);
-        }else{
+          line.objects.splice(line.objects.length-1,1);
+        }else if(object[0].constructor === Coin){
           this.score += 10;
+          if(this.score >= 100) {this.level += 0.2}
           section.querySelector('#score').innerHTML = 'Score: ' + this.score;
           this.assignScore();
+          line.objects.splice(line.objects.length-1,1);
         }
-        line.objects.splice(0,1);
       }
     })
   })
@@ -227,7 +222,7 @@ Game.prototype.updateLines = function() {
 };
 
 Game.prototype.randomLine = function() { 
-  var randomArray = ['Line', 'DangerLine', 'WaterLine'];
+  var randomArray = ['Line', 'DangerLine', 'Line'];
   var randomLine = randomArray[Math.floor(Math.random()*randomArray.length)];
   var newLine;
   if(randomLine === 'Line'){

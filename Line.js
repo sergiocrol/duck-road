@@ -48,23 +48,33 @@ Line.prototype.generateObjects = function() {
     object.push(new Coin(this.canvas, x, this.y, 40, 40));
   }
 
+  if(this.constructor === Line) {
+    for(var i=0; i<=4; i++) {
+      var x = Math.floor(Math.random()*((this.canvas.width-10)-10+1)+10);
+      var y = Math.floor(Math.random()*((this.y-5)-this.y+1)+this.y);
+      var obj = [];
+      obj.push(new Grass(this.canvas, x, y, 40, 40));
+      this.objects.push(obj);
+    }
+  }
+
   if(object.length > 0) {
     this.objects.push(object);
   }
 }
 
-function DangerLine(canvas, y, color, height, direction) {
-  Line.call(this, canvas, y, color, height);
+function DangerLine(canvas, y, color, height, direction, level) {
+  Line.call(this, canvas, y, color, height, level);
   this.enemies = [];
   this.direction = direction;
-  this.speed = (Math.random() * (0.99 - 0.50) + 0.50).toFixed(2); // 0.99 bigger when level up
+  this.speed = (Math.random() * ((0.99+this.level) - (0.60+this.level)) + (0.60+this.level)).toFixed(2); // 0.99 bigger when level up
 }
 
 DangerLine.prototype = Object.create(Line.prototype);
 DangerLine.prototype.constructor = DangerLine;
 
 DangerLine.prototype.generateEnemies = function() {
-  this.random = Math.floor(Math.random()*(320-200+1)+200);
+  this.random = Math.floor(Math.random()*((380-this.level*10)-(200-this.level*10)+1)+(200-this.level*10));
   var cars = ['images/car-yellow.png', 'images/car.png', 'images/car-red.png', 'images/car-green.png', 'images/car-blue.png'];
   var carsReverse = ['images/car-yellow-r.png', 'images/car-r.png', 'images/car-red-r.png', 'images/car-green-r.png', 'images/car-blue-r.png'];
   for(var i=0; i<=20; i++) {
@@ -98,21 +108,23 @@ DangerLine.prototype.updateEnemies = function() {
   });
 }
 
-function WaterLine(canvas, y, color, height) {
+function WaterLine(canvas, y, color, height, direction) {
   Line.call(this, canvas, y, color, height);
-  this.direction = null;
-  this.speed = null;
-  this.lilypad = [];
+  this.direction = direction;
+  this.speed = (Math.random() * (0.99 - 0.60) + 0.60).toFixed(2);   
 }
 
 WaterLine.prototype = Object.create(Line.prototype);
 WaterLine.prototype.constructor = WaterLine;
 
-DangerLine.prototype.generateLilipads = function() {
-  this.random = /*Math.floor(Math.random() * 160) + 90;*/ Math.floor(Math.random()*(280-180+1)+180); // 150 small when level up
-  for(var i=0; i<=20; i++) {
-    var x = (i==0)?0:this.enemies[i-1].x+this.random;
-    var enemy = new Enemy(this.canvas, x, this.y, this.direction, 100, 50, this.speed);
-    this.enemies.push(enemy);
-  }
-}
+/*WaterLine.prototype.generateObjects = function() {
+
+    for(var i=0; i<=4; i++) {
+      var x = (i==0)?0:this.objects[i-1].x+80;
+      var obj = [];
+      this.objects.push(new Trunk(this.canvas, x, this.y, 100, 25, this.speed, this.direction));
+      this.objects.push(obj);
+    }
+  
+}*/
+
