@@ -10,6 +10,7 @@ function Game(canvas) {
   this.score = 0;
   this.isInCenter = false;
   this.onGameOver = null;
+  this.resetScore = 0;
 };
 
 Game.prototype.startGame = function() {
@@ -28,7 +29,7 @@ Game.prototype.startGame = function() {
   }
   console.log(this.lines);
 
-  this.player = new Player(this.canvas, 50, 50);
+  this.player = new Player(this.canvas, 40, 50, 'images/player2.png');
   
   this.generateEnemies();
   this.generateObjects();
@@ -93,7 +94,6 @@ Game.prototype.checkCollisions = function() {
     }
     if(line.constructor === DangerLine){
       line.enemies.forEach((enemy) => {
-        //enemy.checkCollisionWithPlayer(this.player);
         var rightLeft = this.player.x + this.player.width >= enemy.x;
         var leftRight = this.player.x - this.player.width/2 <= enemy.x + enemy.width-20;
         var bottomTop = this.player.y + this.player.height/2-2 >= enemy.y;
@@ -118,7 +118,13 @@ Game.prototype.checkCollisions = function() {
           line.objects.splice(line.objects.length-1,1);
         }else if(object[0].constructor === Coin){
           this.score += 10;
-          if(this.score >= 100) {this.level += 0.2}
+          this.resetScore += 10;
+          if(this.resetScore >= 50) {
+            this.level += 0.2;
+            this.resetScore = 0;
+            var level = Math.round(this.level/2*10)+1;
+            section.querySelector('#level').innerHTML = 'Level ' + level;
+          }
           section.querySelector('#score').innerHTML = 'Score: ' + this.score;
           this.assignScore();
           line.objects.splice(line.objects.length-1,1);
@@ -205,16 +211,13 @@ Game.prototype.updateLines = function() {
     }
     this.lines[0].generateObjects();
     this.lines.forEach(function(line) {
-      //line.move();
       line.y += line.height;
       if(line.constructor === DangerLine){
         line.enemies.forEach(function(lineEnemy) {
-          //lineEnemy.move();
           lineEnemy.y += lineEnemy.height;
         })
       }
       line.objects.forEach(function(lineObject) {
-        //lineEnemy.move();
         lineObject[0].y += 50;
       })
     })
@@ -229,8 +232,6 @@ Game.prototype.randomLine = function() {
     newLine = new Line(this.canvas, -2, 'green', 50, this.level);
   }else if(randomLine === 'DangerLine'){
     newLine = new DangerLine(this.canvas, -2, 'grey', 50, Math.random() < 0.5 ? -1 : 1, this.level);
-  }else{
-    newLine = new WaterLine(this.canvas, -2, 'blue', 50, this.level);
   }
   return newLine;
 }

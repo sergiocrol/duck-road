@@ -26,8 +26,8 @@ Coin.prototype.constructor = Coin;
 
 Coin.prototype.draw = function() {
   var img = new Image();
-  img.src = 'images/coin.png'
-  this.ctx.drawImage(img, this.x, this.y, this.width, this.height);
+  img.src = 'images/acorn.png'
+  this.ctx.drawImage(img, this.x, this.y, this.width-5, this.height-5);
 }
 
 function Grass(canvas, x, y, width, height) {
@@ -41,22 +41,4 @@ Grass.prototype.draw = function() {
   var img = new Image();
   img.src = 'images/grass.png'
   this.ctx.drawImage(img, this.x, this.y, this.width, this.height);
-}
-
-
-function Trunk(canvas, x, y, width, height, speed, direction) {
-  Live.call(this,canvas, x, y, width, height, speed, direction);
-}
-
-Trunk.prototype = Object.create(Live.prototype);
-Trunk.prototype.constructor = Trunk;
-
-Trunk.prototype.draw = function() {
-  var img = new Image();
-  img.src = 'images/log.png'
-  this.ctx.drawImage(img, this.x, this.y, this.width, this.height);
-}
-
-Trunk.prototype.move = function() {
-  this.x += this.speed*this.direction;
 }

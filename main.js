@@ -28,8 +28,11 @@ function main() {
     var gameScreen = `
     <section>
       <canvas width="850px" height="700px"></canvas>
-      <section id="lives">Lives: 3</section>
-      <section id="score">Score: 0</section>
+      <section id="panel">
+        <p id="lives">Lives: 3</p>
+        <p id="score">Score: 0</p>
+        <p id="level">Level 1</p>
+      </section>
     </section>
     `
     buildDom(gameScreen);

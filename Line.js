@@ -77,7 +77,7 @@ DangerLine.prototype.generateEnemies = function() {
   this.random = Math.floor(Math.random()*((380-this.level*10)-(200-this.level*10)+1)+(200-this.level*10));
   var cars = ['images/car-yellow.png', 'images/car.png', 'images/car-red.png', 'images/car-green.png', 'images/car-blue.png'];
   var carsReverse = ['images/car-yellow-r.png', 'images/car-r.png', 'images/car-red-r.png', 'images/car-green-r.png', 'images/car-blue-r.png'];
-  for(var i=0; i<=20; i++) {
+  for(var i=0; i<=8; i++) {
     var carImage = "";
     if(this.direction === 1) {
       carImage = cars[Math.floor(Math.random()*cars.length)];
@@ -108,23 +108,4 @@ DangerLine.prototype.updateEnemies = function() {
   });
 }
 
-function WaterLine(canvas, y, color, height, direction) {
-  Line.call(this, canvas, y, color, height);
-  this.direction = direction;
-  this.speed = (Math.random() * (0.99 - 0.60) + 0.60).toFixed(2);   
-}
-
-WaterLine.prototype = Object.create(Line.prototype);
-WaterLine.prototype.constructor = WaterLine;
-
-/*WaterLine.prototype.generateObjects = function() {
-
-    for(var i=0; i<=4; i++) {
-      var x = (i==0)?0:this.objects[i-1].x+80;
-      var obj = [];
-      this.objects.push(new Trunk(this.canvas, x, this.y, 100, 25, this.speed, this.direction));
-      this.objects.push(obj);
-    }
-  
-}*/
 
