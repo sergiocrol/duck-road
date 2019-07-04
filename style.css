@@ -149,10 +149,17 @@ p {
   width: 200px;
   height: 700px;
   color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+  font-size: 30px;
 }
 
 #panel p{
   width: 100%;
+  margin-left: 50px;
 }
 
 
