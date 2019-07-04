@@ -12,7 +12,9 @@ function main() {
   function createSplashScreen() {
     var splashScreen = `
       <section id="game-start">
-        <button>Start</button>
+        <section>TXERRI <span>&</span> ROAD</section>
+        <img src="images/pig.gif"/>
+        <button class="button">Start</button>
       </section>
     `
     buildDom(splashScreen);
@@ -70,7 +72,7 @@ function main() {
      <section id="game-over">
       <p>Your score: ${score}</p>
       <p>Best score: ${bestScore}</p>
-      <button>Restart</button>
+      <button class="button">Restart</button>
      </section>
     `
     buildDom(gameOverScreen);

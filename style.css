@@ -18,11 +18,13 @@ body {
   height: 100%;
 }
 
+input, button, submit { border:none; }
+
 /* ---- typography ---- */
 
 body {
   color: #111;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: 'VT323', monospace;
   font-size: 16px;
   line-height: 147%;
 }
@@ -65,10 +67,22 @@ p {
 /* ---- components ---- */
 
 .button {
-  width: 100%;
-  background-color: blue;
-  color: #fff;
-  border: 1px solid #fff
+  padding: 10px 60px;
+  font-family: 'VT323', monospace;
+  font-size: 30px;
+  color: white;
+  background-color: blueviolet;
+  border-radius: 5%;
+  box-shadow: 4px 4px rgb(158, 78, 233), 3px 3px rgb(158, 78, 233), 2px 2px rgb(158, 78, 233);
+  border: 1px solid rgb(172, 112, 228);
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.button:hover {
+  font-size: 40px;
+  color: gold;
+  cursor: pointer;
 }
 
 .button-alt {
@@ -96,6 +110,24 @@ p {
   align-items: center;
   flex-direction: column;
   color: #fff;
+  border: 1px solid goldenrod;
+  border-radius: 5px;
+}
+
+#game-start section {
+  font-size: 120px;
+  color: #fff;
+}
+
+#game-start section span {
+  font-size: 150px;
+  color: goldenrod;
+}
+
+#game-start img {
+  width: 150px;
+  margin-bottom: 60px;
+  margin-top: 60px;
 }
 
 #game-over {
@@ -106,8 +138,12 @@ p {
   align-items: center;
   flex-direction: column;
   color: #fff;
+  font-size: 50px;
 }
 
+#game-over p{
+  padding: 20px 0;
+}
 
 #panel {
   width: 200px;
