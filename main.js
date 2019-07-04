@@ -11,7 +11,7 @@ function main() {
 
   function createSplashScreen() {
     var splashScreen = `
-      <section>
+      <section id="game-start">
         <button>Start</button>
       </section>
     `
@@ -28,15 +28,15 @@ function main() {
     var gameScreen = `
     <section>
       <canvas width="850px" height="700px"></canvas>
-      <section id="panel">
-        <p id="lives">Lives: 3</p>
-        <p id="score">Score: 0</p>
-        <p id="level">Level 1</p>
-      </section>
+    </section>
+    <section id="panel">
+      <p id="lives">Lives: 3</p>
+      <p id="score">Score: 0</p>
+      <p id="level">Level 1</p>
     </section>
     `
     buildDom(gameScreen);
-    section = document.querySelector('section');
+    section = document.querySelector('#panel');
 
     var canvas = document.querySelector('canvas');
     var game = new Game(canvas);
@@ -67,7 +67,7 @@ function main() {
     var score = JSON.parse(localStorage.getItem('score')).score;
     var bestScore = JSON.parse(localStorage.getItem('bestScore')).bestScore;
     var gameOverScreen = `
-     <section>
+     <section id="game-over">
       <p>Your score: ${score}</p>
       <p>Best score: ${bestScore}</p>
       <button>Restart</button>
@@ -80,7 +80,7 @@ function main() {
     });
   }
 
-  createGameScreen();
+  createSplashScreen();
 }
 
 window.addEventListener('load', main);

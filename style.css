@@ -88,16 +88,32 @@ p {
 
 /* ---- section ---- */
 
-#site-main section {
-  width: 1100px;
+#game-start {
+  width: 850px;
   height: 700px;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   color: #fff;
 }
 
+#game-over {
+  width: 850px;
+  height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+}
+
+
+#panel {
+  width: 200px;
+  height: 700px;
+  color: #fff;
+}
 
 #panel p{
   width: 100%;
