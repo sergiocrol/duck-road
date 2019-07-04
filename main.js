@@ -43,20 +43,22 @@ function main() {
     game.gameOverCallback(createGameOverScreen);
     game.startGame();  
     document.addEventListener('keydown', function(event) {
-      switch(event.key) {
-        case 'ArrowDown':
-          game.player.direction = SOUTH;
-          break;
-        case 'ArrowUp':
-          game.player.direction = NORTH;
-          game.updateLines();
-          break;
-        case 'ArrowRight':
-          game.player.direction = EAST;
-          break;
-        case 'ArrowLeft':
-          game.player.direction = WEST;
-          break;
+      if(!game.prevent) {
+        switch(event.key) {
+          case 'ArrowDown':
+            game.player.direction = SOUTH;
+            break;
+          case 'ArrowUp':
+            game.player.direction = NORTH;
+            game.updateLines();
+            break;
+          case 'ArrowRight':
+            game.player.direction = EAST;
+            break;
+          case 'ArrowLeft':
+            game.player.direction = WEST;
+            break;
+        }
       }
     })
   }

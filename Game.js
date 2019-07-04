@@ -11,9 +11,34 @@ function Game(canvas) {
   this.isInCenter = false;
   this.onGameOver = null;
   this.resetScore = 0;
+  this.prevent = false;
 };
 
 Game.prototype.startGame = function() {
+  this.restartLines()
+  this.player = new Player(this.canvas, 40, 50, 'images/player3.png', this.prevent);
+  
+  this.generateEnemies();
+  this.generateObjects();
+  var loop = () => {
+    //this.generateEnemies();
+    this.update();
+    this.clear();
+    this.checkCollisions();
+    this.playerInCenter();
+    this.draw();
+    this.updateEnemies();
+    this.checkLives();
+    if(!this.isGameOver) {
+      requestAnimationFrame(loop);
+    }else{
+      this.onGameOver();
+    }
+  }
+  loop();
+};
+
+Game.prototype.restartLines = function() {
   var lineArray = ['Line','DangerLine','Line','DangerLine','DangerLine','Line','DangerLine','DangerLine','DangerLine','Line','DangerLine','DangerLine','DangerLine','Line','DangerLine','DangerLine'];
   lineArray = lineArray.reverse();
   for(var i = 0; i<lineArray.length; i++) {
@@ -27,36 +52,13 @@ Game.prototype.startGame = function() {
     }
     this.lines.push(file);
   }
-  console.log(this.lines);
-
-  this.player = new Player(this.canvas, 40, 50, 'images/player2.png');
-  
-  this.generateEnemies();
-  this.generateObjects();
-  var loop = () => {
-    //this.generateEnemies();
-    this.checkCollisions();
-    this.update();
-    this.clear();
-    this.draw();
-    this.playerInCenter();
-    this.updateEnemies();
-    this.checkLives();
-    if(!this.isGameOver) {
-      requestAnimationFrame(loop);
-    }else{
-      this.onGameOver();
-    }
-  }
-  loop();
-};
+}
 
 Game.prototype.clear = function() {
   this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
 };
 
 Game.prototype.update = function() {
-
   this.player.move('user');
   this.lines.forEach(function(line) {
     if(line.constructor === DangerLine){
@@ -73,6 +75,7 @@ Game.prototype.playerInCenter = function() {
   }else{
     this.isInCenter = false;
   }
+
 };
 
 Game.prototype.updateEnemies = function() {
@@ -164,8 +167,17 @@ Game.prototype.relocatePlayer = function(line, i) {
     return acc;
   },[]);
   var res = validLine[0] - i;
-  this.player.y = this.player.y + (50*res);
   this.player.lives--;
+  this.player.y = this.player.y + (50*res);
+ 
+  //this.player.isOnCenter = false;  
+  this.prevent = true;
+  this.player.prevent = true;
+  this.player.count = 0;
+  setTimeout(() => {
+    this.prevent = false;
+    this.player.prevent = false;
+  }, 1000);
   section.querySelector('#lives').innerHTML = 'Lives: ' + this.player.lives;
 };
 
@@ -203,7 +215,7 @@ Game.prototype.draw = function() {
 }
 
 Game.prototype.updateLines = function() { 
-  if(this.isInCenter){
+  if(this.isInCenter && !this.prevent){
     this.lines.pop();
     this.lines.unshift(this.randomLine());
     if(this.lines[0].constructor === DangerLine){

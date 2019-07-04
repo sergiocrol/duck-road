@@ -2,7 +2,7 @@
 
 var NORTH = 'n', SOUTH = 's', EAST = 'e', WEST = 'w';
 
-function Player(canvas, width, height, img) {
+function Player(canvas, width, height, img, prevent) {
   this.canvas = canvas;
   this.ctx = canvas.getContext('2d');
   this.width = width;
@@ -16,6 +16,7 @@ function Player(canvas, width, height, img) {
   this.isOnCenter = false;
   this.count = 0;
   this.arrayIndex = 0;
+  this.prevent = prevent;
 }
 
 Player.prototype.move = function(type) {
@@ -27,6 +28,7 @@ Player.prototype.move = function(type) {
         break;
       case SOUTH:
         (this.y+this.height < this.canvas.height) ? this.y += this.height : this.y;
+        this.isOnCenter = false;
         break;
       case WEST:
         (this.x > 0) ? this.x -= this.width/3 : this.x;
@@ -53,27 +55,35 @@ Player.prototype.updateLives = function() {
 };
 
 Player.prototype.draw = function() {
-  /*var imgPos = 0;
-  var posArray = [70,140,70,0];
-  this.count++;
-  if(this.count < 15) {
-    imgPos = posArray[this.arrayIndex];
+
+  if(!this.prevent){
+    this.count++;
+    var imgPos = 70;
+    if(this.count >=0 && this.count <= 15) {
+      imgPos = 70;
+    }else if(this.count >15 && this.count <= 30) {
+      imgPos = 140;
+    }else if(this.count >30 && this.count <= 45) {
+      imgPos = 70;
+    }else if(this.count >45 && this.count <= 60) {
+      imgPos = 0;
+    }else if(this.count > 60){
+      this.count = 0;
+    }
   }else{
-    (this.arrayIndex === posArray.length-1) ? this.arrayIndex = 0 : this.arrayIndex += 1;
-    this.count = 0;
-  }*/
-  this.count++;
-  var imgPos = 70;
-  if(this.count >=0 && this.count <= 15) {
-    imgPos = 70;
-  }else if(this.count >15 && this.count <= 30) {
-    imgPos = 140;
-  }else if(this.count >30 && this.count <= 45) {
-    imgPos = 70;
-  }else if(this.count >45 && this.count <= 60) {
-    imgPos = 0;
-  }else if(this.count > 60){
-    this.count = 0;
+    this.count++;
+    var imgPos = 70;
+    if(this.count >=0 && this.count <= 8) {
+      imgPos = 70;
+    }else if(this.count >8 && this.count <= 16) {
+      imgPos = 210;
+    }else if(this.count >16 && this.count <= 24) {
+      imgPos = 70;
+    }else if(this.count >24 && this.count <= 32) {
+      imgPos = 210;
+    }else if(this.count > 32){
+      this.count = 0;
+    }
   }
   var img = new Image();
   img.src = this.img;
