@@ -35,7 +35,7 @@ function main() {
       <img src="images/menu-pig.gif"/>
       <p id="lives"><img src="images/heart.png"/> Lives: <span>3</span></p>
       <p id="score"><img src="images/acorn.png"/> Score: <span>0</span></p>
-      <p id="level">Level <span>1</span></p>
+      <p id="level">Level <span>0</span></p>
     </section>
     `
     buildDom(gameScreen);
@@ -85,7 +85,7 @@ function main() {
     });
   }
 
-  createGameOverScreen();
+  createSplashScreen();
 }
 
 window.addEventListener('load', main);
