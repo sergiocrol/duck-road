@@ -28,7 +28,6 @@ Player.prototype.move = function(type) {
         break;
       case SOUTH:
         (this.y+this.height < this.canvas.height) ? this.y += this.height : this.y;
-        this.isOnCenter = false;
         break;
       case WEST:
         (this.x > 0) ? this.x -= this.width/3 : this.x;
@@ -39,6 +38,14 @@ Player.prototype.move = function(type) {
     }
     this.direction = '';
   }else{
+    switch(this.direction) {
+      case WEST:
+        (this.x > 0) ? this.x -= this.width/3 : this.x;
+        break;
+      case EAST:
+        (this.x+this.width < this.canvas.width) ? this.x += this.width/3 : this.x;
+        break;
+    }
     this.direction = '';
   }
   /*}else{

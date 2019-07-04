@@ -72,8 +72,10 @@ Game.prototype.update = function() {
 Game.prototype.playerInCenter = function() {
   if(this.player.y <= this.lines[9].y+this.lines[9].height/2) {
     this.isInCenter = true;
+    this.player.isOnCenter = true;
   }else{
     this.isInCenter = false;
+    this.player.isOnCenter = false;
   }
 
 };
@@ -116,8 +118,7 @@ Game.prototype.checkCollisions = function() {
       if(rightLeft && leftRight && bottomTop && topBottom) {
         if(object[0].constructor === Live) {
           this.player.lives++;
-          section.querySelector('#lives').innerHTML = 'Lives: ' + this.player.lives;
-          console.log(this.player.lives);
+          section.querySelector('#lives').innerHTML = `<img src="images/heart.png"/> Lives: <span>${this.player.lives}</span>`;
           line.objects.splice(line.objects.length-1,1);
         }else if(object[0].constructor === Coin){
           this.score += 10;
@@ -126,9 +127,9 @@ Game.prototype.checkCollisions = function() {
             this.level += 0.2;
             this.resetScore = 0;
             var level = Math.round(this.level/2*10)+1;
-            section.querySelector('#level').innerHTML = 'Level ' + level;
+            section.querySelector('#level').innerHTML = `<p id="level">Level <span>${level}</span></p>`;
           }
-          section.querySelector('#score').innerHTML = 'Score: ' + this.score;
+          section.querySelector('#score').innerHTML = `<img src="images/acorn.png"/> Score: <span>${this.score}</span>`;
           this.assignScore();
           line.objects.splice(line.objects.length-1,1);
         }
@@ -139,7 +140,6 @@ Game.prototype.checkCollisions = function() {
 
 Game.prototype.assignScore = function() {
   localStorage.setItem('score', JSON.stringify({score: this.score}));
-  console.log(JSON.parse(localStorage.getItem('score')).score);
   if(JSON.parse(localStorage.getItem('bestScore')) === null) {  
     localStorage.setItem('bestScore', JSON.stringify({bestScore: this.score}));
   }else{
@@ -157,8 +157,15 @@ Game.prototype.checkLives = function() {
   }
 };
 
-Game.prototype.relocatePlayer = function(line, i) {
-  var validLine = this.lines.reduce(function(acc, current, index){
+Game.prototype.relocatePlayer = function(line,i) {
+  var res = 0;
+  for(var j=i+1;j<=this.lines.length-1; j++){
+    if(this.lines[j].constructor === Line) {
+      res = j;
+      break;
+    }
+  }
+  /*var validLine = this.lines.reduce(function(acc, current, index){
     if(index > i){
       if(current.constructor === Line) {
         acc.push(index);
@@ -166,9 +173,11 @@ Game.prototype.relocatePlayer = function(line, i) {
     }
     return acc;
   },[]);
-  var res = validLine[0] - i;
+  var res = validLine[0] - i;*/
+  console.log(this.lines[res].y);
   this.player.lives--;
-  this.player.y = this.player.y + (50*res);
+  //this.player.y = this.player.y + (50*res);
+  this.player.y = this.lines[res].y + this.player.height/2;
  
   //this.player.isOnCenter = false;  
   this.prevent = true;
@@ -178,7 +187,7 @@ Game.prototype.relocatePlayer = function(line, i) {
     this.prevent = false;
     this.player.prevent = false;
   }, 1000);
-  section.querySelector('#lives').innerHTML = 'Lives: ' + this.player.lives;
+  section.querySelector('#lives').innerHTML = `<img src="images/heart.png"/> Lives: <span>${this.player.lives}</span>`
 };
 
 Game.prototype.generateEnemies = function() {

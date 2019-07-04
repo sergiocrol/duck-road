@@ -32,9 +32,10 @@ function main() {
       <canvas width="850px" height="700px"></canvas>
     </section>
     <section id="panel">
-      <p id="lives">Lives: 3</p>
-      <p id="score">Score: 0</p>
-      <p id="level">Level 1</p>
+      <img src="images/menu-pig.gif"/>
+      <p id="lives"><img src="images/heart.png"/> Lives: <span>3</span></p>
+      <p id="score"><img src="images/acorn.png"/> Score: <span>0</span></p>
+      <p id="level">Level <span>1</span></p>
     </section>
     `
     buildDom(gameScreen);
@@ -70,8 +71,10 @@ function main() {
     var bestScore = JSON.parse(localStorage.getItem('bestScore')).bestScore;
     var gameOverScreen = `
      <section id="game-over">
-      <p>Your score: ${score}</p>
-      <p>Best score: ${bestScore}</p>
+      <p class="gameover-title">GAME</p>
+      <p class="gameover-title">OVER</span></p>
+      <p>Your score: <span>${score}</span></p>
+      <p>Best score: <span>${bestScore}</span></p>
       <button class="button">Restart</button>
      </section>
     `
@@ -82,7 +85,7 @@ function main() {
     });
   }
 
-  createSplashScreen();
+  createGameOverScreen();
 }
 
 window.addEventListener('load', main);

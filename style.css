@@ -67,7 +67,9 @@ p {
 /* ---- components ---- */
 
 .button {
-  padding: 10px 60px;
+  /*padding: 10px 60px;*/
+  width: 182px;
+  height: 52px;
   font-family: 'VT323', monospace;
   font-size: 30px;
   color: white;
@@ -80,7 +82,7 @@ p {
 }
 
 .button:hover {
-  font-size: 40px;
+  font-size: 35px;
   color: gold;
   cursor: pointer;
 }
@@ -110,8 +112,8 @@ p {
   align-items: center;
   flex-direction: column;
   color: #fff;
-  border: 1px solid goldenrod;
-  border-radius: 5px;
+  border-radius: 5%;
+  box-shadow:-1px 3px 38px -4px rgba(56,95,143,1);
 }
 
 #game-start section {
@@ -141,14 +143,26 @@ p {
   font-size: 50px;
 }
 
-#game-over p{
-  padding: 20px 0;
+#game-over p {
+  padding: 10px 0 30px 0;
+}
+
+#game-over p span{
+  color: goldenrod;
+}
+
+.gameover-title {
+  font-size: 190px;
+  margin: 50px 0;
+}
+
+#game-over :nth-child(2) {
+  margin-bottom: 80px;
 }
 
 #panel {
   width: 200px;
-  height: 700px;
-  color: #fff;
+  height: 707px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -157,10 +171,41 @@ p {
   font-size: 30px;
 }
 
-#panel p{
-  width: 100%;
-  margin-left: 50px;
+#panel :first-child {
+  width: 150px;
 }
+
+
+#panel :last-child {
+  margin-top: 80px;
+  font-size: 50px;
+  align-self: center;
+}
+
+#panel :last-child span {
+  font-size: 60px;
+  color: goldenrod;
+}
+
+#panel :nth-child(2) img {
+  width: 40px;
+  vertical-align: middle;
+}
+
+#panel :nth-child(2) span,  #panel :nth-child(3) span{
+  color:yellowgreen;
+  font-size: 40px;
+}
+
+#panel :nth-child(3) img{
+  width: 30px;
+  vertical-align: middle;
+}
+
+#panel p {
+  margin: 5px 0;
+}
+
 
 
 /* ---- canvas ---- */
