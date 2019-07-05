@@ -117,10 +117,14 @@ Game.prototype.checkCollisions = function() {
     
       if(rightLeft && leftRight && bottomTop && topBottom) {
         if(object[0].constructor === Live) {
+          var audio = new Audio('audios/heart.mp3');
+          audio.play();
           this.player.lives++;
           section.querySelector('#lives').innerHTML = `<img src="images/heart.png"/> Lives: <span>${this.player.lives}</span>`;
           line.objects.splice(line.objects.length-1,1);
         }else if(object[0].constructor === Coin){
+          var audio = new Audio('audios/acorn.mp3');
+          audio.play();
           this.score += 10;
           this.resetScore += 10;
           if(this.resetScore >= 50) {
@@ -178,6 +182,8 @@ Game.prototype.relocatePlayer = function(line,i) {
   this.player.lives--;
   //this.player.y = this.player.y + (50*res);
   this.player.y = this.lines[res].y + this.player.height/2;
+  var audio = new Audio('audios/pig.mp3');
+  audio.play();
  
   //this.player.isOnCenter = false;  
   this.prevent = true;
