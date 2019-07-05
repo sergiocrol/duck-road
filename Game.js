@@ -157,6 +157,8 @@ Game.prototype.assignScore = function() {
 
 Game.prototype.checkLives = function() {
   if(this.player.lives <= 0) {
+    var audio = new Audio('audios/gameover.wav');
+    audio.play();
     this.isGameOver = true;
   }
 };
@@ -182,8 +184,10 @@ Game.prototype.relocatePlayer = function(line,i) {
   this.player.lives--;
   //this.player.y = this.player.y + (50*res);
   this.player.y = this.lines[res].y + this.player.height/2;
-  var audio = new Audio('audios/pig.mp3');
-  audio.play();
+  if(this.player.lives > 0) {
+    var audio = new Audio('audios/pig.mp3');
+    audio.play();
+  }
  
   //this.player.isOnCenter = false;  
   this.prevent = true;
