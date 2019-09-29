@@ -122,17 +122,9 @@ Definition of the different states and their transition (transition functions)
 
 ## Links
 
-
-### Trello
-[Link url](https://trello.com)
-
-
-### Git
-URls for the project repo and deploy
-[Link Repo](http://github.com)
-[Link Deploy](http://github.com)
+### Deploy
+[Link Deploy](https://sergiocrol.github.io/duck-road/)
 
 
 ### Slides
-URls for the project presentation (slides)
-[Link Slides.com](http://slides.com)
+[Link slides](https://docs.google.com/presentation/d/1viiBplQET8uZltq-n6w2EAH9Ukq5Lg-YGQcWlDX4H-g/edit?usp=sharing)
